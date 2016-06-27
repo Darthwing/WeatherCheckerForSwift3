@@ -23,6 +23,7 @@ class second: UIViewController {
         self.Feels.isHidden = true
         
         self.tempLabel?.isHidden = true
+        self.DegreeSym.isHidden = true
         
         self.precipLabel?.isHidden = true
         self.precip.isHidden = true
@@ -82,7 +83,7 @@ class second: UIViewController {
                     }
                     self.waitingDial.isHidden = true
                     
-                    self.tempLabel?.text = "\(currentWeather.temperature!)º"
+                    self.tempLabel?.text = "\(currentWeather.temperature!)"
                     self.tempLabel?.isHidden = false
                     
                     self.precipLabel?.text = "\(currentWeather.precipWhole!)%"
@@ -97,6 +98,7 @@ class second: UIViewController {
                     self.precip.isHidden = false
                     self.Humid.isHidden = false
                     self.Feels.isHidden = false
+                    self.DegreeSym.isHidden = false
                     
                     switch (currentWeather.icon)
                     {
@@ -155,6 +157,7 @@ class second: UIViewController {
     @IBOutlet weak var snowyIcon: UIImageView!
     @IBOutlet weak var windyIcon: UIImageView!
     @IBOutlet weak var sunnyIcon: UIImageView!
+    @IBOutlet weak var DegreeSym: UILabel!
     
     
     @IBOutlet weak var Feels: UILabel!
@@ -192,16 +195,16 @@ class second: UIViewController {
         //        Geocoding
         //        __________________________________________________________________
         
-        print("At load time: \(coordinates)")
+//        print("At load time: \(coordinates)")
         geocoding("\(address)")
         {
             //        Weather
             //        __________________________________________________________________
             
             
-            print("this is the new Lat \(self.newLat)")
+//            print("this is the new Lat \(self.newLat)")
             self.forecastUrl = URL(string: "https://api.forecast.io/forecast/956caa21f4ca41ecf05999993bbfcbe1/\(self.newLat),\(self.newLong)")
-            print(self.forecastUrl!)
+//            print(self.forecastUrl!)
             self.getForecast(){(currently) in
                 if let currentWeather = currently
                 {
@@ -229,7 +232,8 @@ class second: UIViewController {
                     }
                         self.waitingDial.isHidden = true
                     
-                        self.tempLabel?.text = "\(currentWeather.temperature!)º"
+                        self.tempLabel?.text = "\(currentWeather.temperature!)"
+                        self.DegreeSym.textColor = UIColor.white()
                         self.tempLabel?.textColor = UIColor.white()
                     
                         self.precipLabel?.text = "\(currentWeather.precipWhole!)%"
@@ -244,6 +248,8 @@ class second: UIViewController {
                         self.precip.textColor = UIColor.white()
                         self.Humid.textColor = UIColor.white()
                         self.Feels.textColor = UIColor.white()
+                    
+                    
                     
                         switch (currentWeather.icon)
                         {
@@ -293,7 +299,7 @@ class second: UIViewController {
     // func GetForecast
     func getForecast(_ completion: ((CurrentWeather?) -> Void))
     {
-        print(self.forecastUrl)
+//        print(self.forecastUrl)
         let networkOperation = NetworkOperation(url: (self.forecastUrl)!)
         networkOperation.downloadJSONFromUrl
             { (JSONDictionary) in
@@ -320,7 +326,7 @@ class second: UIViewController {
             }
             else
             {
-                print("Sorry, I am not able to find that location.")
+//                print("Sorry, I am not able to find that location.")
                 self.waitingDial.isHidden = true
                 self.noLocation.isHidden = false
                 

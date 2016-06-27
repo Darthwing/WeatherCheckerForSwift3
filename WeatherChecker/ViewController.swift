@@ -64,7 +64,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
+        
+        performSegue(withIdentifier: "viewWeb", sender: nil)
+        
         return true
         
     }
